@@ -32,4 +32,4 @@ steps:
       Copy-Item $name -Destination $destFile -Recurse -Force 
     }
     Get-ChildItem -Path $(Build.ArtifactStagingDirectory) -Recurse -Force
-    ./AzureServiceDeployClient.ps1
+    Get-Help New-AzureServiceRollout -detail
