@@ -364,7 +364,7 @@ function LaunchCmdlet
 
 $scriptPath = Split-Path -Parent $PSCommandPath
 $nugetPath = Join-Path $scriptPath "nuget.exe"
-$azureServiceDeployClientPath = Join-Path $(Build.ArtifactStagingDirectory) "Microsoft\AzureServiceDeployClient"
+$azureServiceDeployClientPath = "/home/vsts/work/1/a/Microsoft/AzureServiceDeployClient"
 
 if (!(Test-Path $azureServiceDeployClientPath))
 {
