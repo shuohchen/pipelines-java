@@ -32,4 +32,4 @@ steps:
       Copy-Item $name -Destination $destFile -Recurse -Force 
     }
     Get-ChildItem -Path $(Build.ArtifactStagingDirectory) -Recurse -Force
-    Get-Help New-AzureServiceRollout -detail
+    Import-Module Az
