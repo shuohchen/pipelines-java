@@ -1,0 +1,79 @@
+{
+  "$schema": "https://ev2schema.azure.net/schemas/2020-01-01/rolloutParameters.json",
+  "contentVersion": "1.0.0.0",
+  "extensions": [
+    {
+      "Name": "CreateMyTable",
+      "Type": "Microsoft.Kusto/KustoExtension",
+      "Version": "2019-04-01",
+      "ConnectionProperties": {
+        "MaxExecutionTime": "PT15M",
+        "Authentication": {
+          "Type": "AadApplicationAuthentication",
+          "Reference": {
+            "Provider": "AzureKeyVault",
+            "Parameters": {
+              "SecretId": "https://kustofunctestkeyvault.vault.azure.net/secrets/kustoclustercertificate/90272f1886c04f81b20ede8836ff0ea5"
+            }
+          },
+          "Properties": {
+            "ApplicationId": "1fbca744-ecfa-4f18-852e-740b7572c958",
+            "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+          }
+        }
+      },
+      "payloadProperties": {
+        "ConnectionString": {
+          "Value": "https://kustofunctestcluster.japaneast.kusto.windows.net"
+        },
+        "Command": {
+          "Value": ".create table MyTable ( Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32 )"
+        },
+        "WaitForOperation": {
+          "Value": "true"
+        },
+        "DatabaseName": {
+          "Value": "kustofunctestdb"
+        }
+      }
+    },
+    {
+      "Name": "CreateFunction",
+      "Type": "Microsoft.Kusto/KustoExtension",
+      "Version": "2019-04-01",
+      "ConnectionProperties": {
+        "MaxExecutionTime": "PT15M",
+        "Authentication": {
+          "Type": "AadApplicationAuthentication",
+          "Reference": {
+            "Provider": "AzureKeyVault",
+            "Parameters": {
+              "SecretId": "https://kustofunctestkeyvault.vault.azure.net/secrets/kustoclustercertificate/90272f1886c04f81b20ede8836ff0ea5"
+            }
+          },
+          "Properties": {
+            "ApplicationId": "1fbca744-ecfa-4f18-852e-740b7572c958",
+            "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+          }
+        }
+      },
+      "payloadProperties": {
+        "ConnectionString": {
+          "Value": "https://kustofunctestcluster.japaneast.kusto.windows.net"
+        },
+        "KqlSasUri": {
+          "reference": {
+            "path": "Parameters\\myFunc.kql",
+            "enableScopeTagBindings": "false"
+          }
+        },
+        "WaitForOperation": {
+          "Value": "true"
+        },
+        "DatabaseName": {
+          "Value": "kustofunctestdb"
+        }
+      }
+    }
+  ]
+}

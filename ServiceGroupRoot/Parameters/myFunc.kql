@@ -1,0 +1,1 @@
+﻿.create function renderPERatioChart(){ TaiwanStockPrice | where Security_Code  == 2330 | project Date, Price_Earning_Ratio | render linechart  }

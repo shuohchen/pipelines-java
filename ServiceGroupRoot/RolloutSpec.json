@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ev2schema.azure.net/schemas/2020-01-01/rolloutSpecification.json",
+  "ContentVersion": "1.0.0.0",
+  "RolloutMetadata": {
+    "ServiceModelPath": "ServiceModel.json",
+    "Name": "Kusto Extension Command Example",
+    "RolloutType": "Major",
+    "BuildSource": {
+      "Parameters": {
+        "VersionFile": "buildver.txt"
+      }
+    }
+  },
+  "OrchestratedSteps": [
+    {
+      "Name": "Rollout_PrepareMyCluster",
+      "TargetType": "ServiceResource",
+      "TargetName": "PrepareMyClusterServiceGroup",
+      "Actions": [ "Extension/CreateMyTable", "Extension/CreateFunction" ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ev2schema.azure.net/schemas/2020-01-01/serviceModel.json",
+  "contentVersion": "0.0.0.1",
+
+  "ServiceMetadata": {
+    "ServiceGroup": "MyServiceConfig",
+    "Environment": "Test"
+  },
+
+  "ServiceResourceGroupDefinitions": [
+    {
+      "Name": "MyServiceResourceDefinition",
+      "ServiceResourceDefinitions": [
+        {
+          "Name": "PrepareMyCluster",
+          "ComposedOf": {
+            "extension": {
+              "RolloutParametersPath": "RolloutParameters\\Kusto.Extenstion.RolloutParameters.json",
+              "allowedTypes": [
+                { "Type": "Microsoft.Kusto/KustoExtension" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+
+  "serviceResourceGroups": [
+    {
+      "AzureResourceGroupName": "neochen-rg",
+      "Location": "northeurope",
+      "InstanceOf": "MyServiceResourceDefinition",
+      "AzureSubscriptionId": "b2370992-8afd-4ee4-ba1d-b4c6ea6298af",
+      "serviceResources": [
+        {
+          "name": "PrepareMyClusterServiceGroup",
+          "instanceOf": "PrepareMyCluster"
+        }
+      ]
+    }
+  ]
+}
