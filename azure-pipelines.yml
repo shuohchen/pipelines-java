@@ -1,0 +1,35 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- powershell: |
+    $files=$(git diff HEAD HEAD~ --name-only);  
+    $temp=$files-split ' '; 
+    $count=$temp.Length;
+    echo "ArtifactStagingDirectory:" $(Build.ArtifactStagingDirectory)
+    echo "Total changed $count files";
+    For ($i=0; $i -lt $temp.Length; $i++)
+    {
+      $name=$temp[$i];
+      echo "Modified File -  $name file";
+      $filepath = ($name.Split('/'))[0..($name.Split('/').count-2)] -join '/';
+      echo "File path - $filepath";          
+      $destFile = Join-Path $(Build.ArtifactStagingDirectory) $name;
+      $destinationpath = Split-Path $destFile ;
+      echo "Destination path - $destinationpath";
+      if (!(Test-Path -Path $destinationpath)) {
+          New-Item $destinationpath -ItemType Directory
+      }
+      Copy-Item $name -Destination $destFile -Recurse -Force 
+    }
+    Get-ChildItem -Path $(Build.ArtifactStagingDirectory) -Recurse -Force
+    AzureServiceDeployClient.ps1
